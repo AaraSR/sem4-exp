@@ -1,0 +1,6 @@
+apply styles (internal, external, inline) to webpage; apply colour, background-color/image/ font style, table style 
+list style
+
+internal: style tab in head
+external: seperate .css file and link to .html file
+inline: inside the tag

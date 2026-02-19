@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aaradhya Raut | Developer</title>
+
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #020617;
+            --accent: #38bdf8;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            scroll-behavior: smooth;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 100;
+        }
+
+        nav a {
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        /* HERO */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        .hero span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 1.2rem;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 100px 60px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+
+        /* ABOUT */
+        .about p {
+            max-width: 800px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        /* SKILLS */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* PROJECTS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 14px;
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 30px;
+            }
+            section {
+                padding: 80px 30px;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <strong>Aaradhya</strong>
+        <div>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div>
+            <h1>Aaradhya Raut<br><span>Developer & AI Enthusiast</span></h1>
+            <p>Building elegant web experiences & intelligent systems</p>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <h2>About Me</h2>
+        <p>
+            I am a passionate developer specializing in modern web technologies and Artificial Intelligence.
+            I focus on building scalable, performant, and visually refined applications that solve real-world problems.
+        </p>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">Python</div>
+            <div class="skill-card">HTML</div>
+            <div class="skill-card">CSS</div>
+            <div class="skill-card">JavaScript</div>
+            <div class="skill-card">AI & Machine Learning</div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>AI-Based Prediction System</h3>
+                <p>Machine learning model for intelligent decision-making.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>Full Stack Web Application</h3>
+                <p>High-performance responsive web app with modern UI.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>Developer Portfolio</h3>
+                <p>Elegant portfolio showcasing professional work.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <h2>Connect</h2>
+        <p>
+            <a href="https://github.com/yourusername" target="_blank">GitHub</a> ·
+            <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a> ·
+            <a href="https://instagram.com/yourusername" target="_blank">Instagram</a>
+        </p>
+    </section>
+
+    <footer>
+        © 2026 Aaradhya Raut · Built with passion
+    </footer>
+
+</body>
+</html>

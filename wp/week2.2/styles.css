@@ -1,0 +1,35 @@
+/* External CSS: Background color for body (overridden by internal if needed) */
+body {
+    background-color: #f0f0f0; /* Fallback */
+}
+
+/* External CSS: Font style for headings */
+h2 {
+    font-weight: bold;
+    color: green;
+    /* External: Gradient background for h2 */
+    background: linear-gradient(to left, #ffecd2, #fcb69f); /* Light to peach gradient */
+    padding: 10px;
+}
+
+/* External CSS: Table styling (additional to internal) */
+table {
+    margin-top: 20px;
+}
+
+/* External CSS: List styling (additional to internal) */
+ul {
+    color: purple;
+    /* External: Background image for ul */
+    background-image: url('https://via.placeholder.com/300x100?text=List+BG'); /* Placeholder image */
+    background-size: cover;
+    padding: 20px;
+}
+
+/* External CSS: New class for a section with gradient */
+.gradient-section {
+    background: radial-gradient(ellipse, #d299c2, #fef9d7); /* Purple to yellow radial gradient */
+    padding: 20px;
+    margin-top: 20px;
+    color: black;
+}

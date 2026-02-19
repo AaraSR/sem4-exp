@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap Typography Demo</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+
+    <!-- ---------- HEADINGS ---------- -->
+    <h1>h1 Bootstrap heading</h1>
+    <h2>h2 Bootstrap heading</h2>
+    <h3>h3 Bootstrap heading</h3>
+    <h4>h4 Bootstrap heading</h4>
+    <h5>h5 Bootstrap heading</h5>
+    <h6>h6 Bootstrap heading</h6>
+
+    <!-- ---------- HEADINGS + SMALL ---------- -->
+    <h1>
+        Heading with <small class="text-muted">secondary text</small>
+    </h1>
+    <h2>
+        Heading with <small class="text-muted">secondary text</small>
+    </h2>
+
+    <!-- ---------- MARK & ABBR ---------- -->
+    <p>Use the <mark>mark</mark> element to highlight text.</p>
+    <p>The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.</p>
+
+    <!-- ---------- BLOCKQUOTE ---------- -->
+    <blockquote class="blockquote">
+        <p class="mb-0">
+            “This is a Bootstrap styled blockquote.”
+        </p>
+        <footer class="blockquote-footer">
+            Someone famous in <cite title="Source Title">Source Title</cite>
+        </footer>
+    </blockquote>
+
+    <!-- Blockquote right aligned -->
+    <blockquote class="blockquote text-end">
+        <p class="mb-0">
+            This blockquote is right-aligned.
+        </p>
+    </blockquote>
+
+    <!-- ---------- DESCRIPTION LIST ---------- -->
+    <dl class="row">
+        <dt class="col-sm-3">Coffee</dt>
+        <dd class="col-sm-9">Black hot drink</dd>
+        <dt class="col-sm-3">Milk</dt>
+        <dd class="col-sm-9">White cold drink</dd>
+    </dl>
+
+    <!-- ---------- CODE, KBD, PRE ---------- -->
+    <p>Inline <code>code</code> example.</p>
+    <p>
+        Use <kbd>Ctrl + C</kbd> to copy text.
+    </p>
+    <pre>
+function hello() {
+    console.log("Preformatted text!");
+}
+    </pre>
+
+    <!-- ---------- CONTEXTUAL COLORS ---------- -->
+    <p class="text-muted">.text-muted (muted text)</p>
+    <p class="text-primary">.text-primary (primary text)</p>
+    <p class="text-success">.text-success (success text)</p>
+    <p class="text-info">.text-info (info text)</p>
+    <p class="text-warning">.text-warning (warning text)</p>
+    <p class="text-danger">.text-danger (danger text)</p>
+
+    <!-- Background colors -->
+    <p class="bg-primary text-white p-2">.bg-primary</p>
+    <p class="bg-success text-white p-2">.bg-success</p>
+
+    <!-- ---------- TYPOGRAPHY UTILITIES ---------- -->
+    <p class="lead">This is a lead paragraph (.lead).</p>
+    <p class="small">This is smaller text (.small).</p>
+    <p class="text-start">Left aligned text</p>
+    <p class="text-center">Center aligned text</p>
+    <p class="text-end">Right aligned text</p>
+    <p class="text-lowercase">Lowercase text</p>
+    <p class="text-uppercase">Uppercase text</p>
+    <p class="text-capitalize">Capitalized text</p>
+
+    <!-- Unstyled list -->
+    <ul class="list-unstyled">
+        <li>No list-style item 1</li>
+        <li>No list-style item 2</li>
+    </ul>
+
+    <!-- Inline list -->
+    <ul class="list-inline">
+        <li class="list-inline-item">Inline 1</li>
+        <li class="list-inline-item">Inline 2</li>
+        <li class="list-inline-item">Inline 3</li>
+    </ul>
+
+    <!-- Scrollable <pre> -->
+    <pre class="pre-scrollable">
+This is a scrollable pre block.
+Line 1
+Line 2
+Line 3
+Line 4
+Line 5
+    </pre>
+
+    <!-- Bootstrap JS (Optional, for any interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Practice Page</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Internal CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Orange to yellow gradient */
+        }
+        h1 {
+            color: blue;
+            background-color: lightgray;
+        }
+        p {
+            font-style: italic;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: radial-gradient(circle, #a8edea, #fed6e3); /* Blue-green to pink gradient */
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        ul {
+            list-style-type: square;
+        }
+        .gradient-div {
+            background: linear-gradient(45deg, #667eea, #764ba2); /* Purple gradient */
+            padding: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to CSS Practice</h1>
+    
+    <p>internal font styling.</p>
+    
+    <p style="color: red; background: linear-gradient(to bottom, yellow, orange); padding: 10px;">
+        inline CSS for color and a gradient background.
+    </p>
+    
+    <h2>My friends</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>Om</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>Alim</td>
+            <td>90</td>
+        </tr>
+    </table>
+    
+    <h2>Grocery List</h2>
+    <ul>
+        <li>Pen</li>
+        <li>Paper</li>
+        <li>Books</li>
+    </ul>
+    
+    <div style="background-image: url('/wp/week1/pfp.png'); "width: 100%; height: 100%;"; background-size: cover; background-repeat: no-repeat;">
+        This div has an inline background image.
+    </div>
+    
+    <!-- <div class="gradient-div">
+        <h3>Gradient Section</h3>
+        <p>This div uses an internal gradient background.</p>
+    </div> -->
+</body>
+</html>
