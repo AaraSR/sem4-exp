@@ -26,3 +26,4 @@ var Add = (num1, num2) => num1 + num2;
 
 let sum = Add(1, 2)
 console.log(sum);
+
