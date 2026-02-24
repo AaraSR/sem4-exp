@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Awaits - Explore the World</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Custom inline styles for enhanced design -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+        }
+        .jumbotron {
+            background: url('https://source.unsplash.com/random/1200x600/?adventure,mountain') no-repeat center center;
+            background-size: cover;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .breadcrumb {
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Jumbotron Hero Section -->
+        <div class="jumbotron p-5 mb-4">
+            <h1 class="display-4">Adventure Awaits</h1>
+            <p class="lead">Discover breathtaking destinations, plan your next trip, and create unforgettable memories. From mountain peaks to ocean depths, your journey starts here.</p>
+            <hr class="my-4">
+            <p>Explore curated travel guides, tips, and exclusive deals.</p>
+            <a class="btn btn-primary btn-lg" href="#destinations" role="button">Start Exploring</a>
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#destinations">Destinations</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Adventure Guides</li>
+            </ol>
+        </nav>
+
+        <!-- Main Content Section -->
+        <section id="destinations" class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://source.unsplash.com/random/400x300/?mountain,hiking" class="card-img-top" alt="Mountain Adventure">
+                    <div class="card-body">
+                        <h5 class="card-title">Mountain Treks</h5>
+                        <p class="card-text">Conquer the highest peaks with our expert-guided treks. Experience the thrill of nature at its finest.</p>
+                        <a href="#" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://source.unsplash.com/random/400x300/?beach,ocean" class="card-img-top" alt="Beach Getaway">
+                    <div class="card-body">
+                        <h5 class="card-title">Beach Escapes</h5>
+                        <p class="card-text">Relax on pristine shores, dive into crystal-clear waters, and unwind under the sun.</p>
+                        <a href="#" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://source.unsplash.com/random/400x300/?city,urban" class="card-img-top" alt="City Exploration">
+                    <div class="card-body">
+                        <h5 class="card-title">Urban Adventures</h5>
+                        <p class="card-text">Dive into vibrant city life, explore cultural landmarks, and enjoy culinary delights.</p>
+                        <a href="#" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Section for Interest -->
+        <section class="mt-5">
+            <h2 class="text-center mb-4 text-white">Why Choose Us?</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">Expert Guides</h4>
+                        <p>Our seasoned travel experts ensure safe and memorable experiences tailored to your preferences.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Sustainable Travel</h4>
+                        <p>We promote eco-friendly practices to preserve the beauty of our planet for future generations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Adventure Awaits. All rights reserved. | <a href="#" class="text-light">Contact Us</a></p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
