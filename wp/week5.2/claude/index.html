@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Events — Ultra Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <div class="page-wrapper">
+
+    <!-- Hero Header -->
+    <header class="site-header">
+      <span class="eyebrow">Interactive Event System</span>
+      <h1>DOM Events Lab</h1>
+      <p>A living, breathing showcase of every browser event — redesigned for the elite.</p>
+    </header>
+
+    <!-- ① CLICK ──────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">01 — Common Events</div>
+      <div class="card">
+        <button class="btn" id="clickBtn">Fire Event</button>
+        <div class="log-feed" id="clickLog"></div>
+        <span class="status-badge" id="clickBadge" style="color: var(--neon-cyan)">
+          <span class="dot"></span> Event Fired
+        </span>
+      </div>
+    </section>
+
+    <!-- ② FOCUS / BLUR ───────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">02 — Focus &amp; Blur</div>
+      <div class="card">
+        <div class="focus-wrap">
+          <input class="input" id="focusInput" type="text" placeholder="Click to focus me…">
+          <span class="focus-indicator" id="focusIndicator"></span>
+        </div>
+        <div class="log-feed" id="focusLog"></div>
+      </div>
+    </section>
+
+    <!-- ③ KEYBOARD ───────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">03 — Keyboard Events</div>
+      <div class="card">
+        <input class="input" id="keyboardInput" type="text" placeholder="Type anything…">
+        <div class="key-display" id="keyDisplay">
+          <div class="key-chip" id="keyChip">—</div>
+          <div>
+            <div class="key-label">LAST KEY</div>
+          </div>
+        </div>
+        <div class="log-feed" id="keyboardLog"></div>
+      </div>
+    </section>
+
+    <!-- ④ FORM ───────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">04 — Form Events</div>
+      <div class="card">
+        <form id="myForm">
+          <div class="form-row">
+            <input class="input" id="nameInput" type="text" placeholder="Enter your name…">
+            <button class="btn" type="submit">Submit</button>
+          </div>
+        </form>
+        <div class="typing-preview" id="typingPreview"></div>
+        <div class="log-feed" id="formLog"></div>
+      </div>
+    </section>
+
+    <!-- ⑤ MOUSE ──────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">05 — Mouse Events</div>
+      <div class="card">
+        <div class="mouse-box" id="mouseBox">
+          <div class="mouse-glow" id="mouseGlow"></div>
+          <div class="mouse-box-inner" id="mouseBoxLabel">Move over me</div>
+          <div class="mouse-box-coords" id="mouseBoxCoords">x: — y: —</div>
+        </div>
+        <div class="log-feed" id="mouseLog"></div>
+      </div>
+    </section>
+
+    <!-- ⑥ WINDOW ─────────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">06 — Window Events</div>
+      <div class="card">
+        <div class="stat-grid">
+          <div class="stat-card" id="statW">
+            <span class="stat-value" id="winW">—</span>
+            <span class="stat-unit">WIDTH (px)</span>
+          </div>
+          <div class="stat-card" id="statH">
+            <span class="stat-value" id="winH">—</span>
+            <span class="stat-unit">HEIGHT (px)</span>
+          </div>
+          <div class="stat-card" id="statS">
+            <span class="stat-value" id="scrollY">0</span>
+            <span class="stat-unit">SCROLL (px)</span>
+          </div>
+        </div>
+        <div class="log-feed" id="windowLog"></div>
+      </div>
+    </section>
+
+    <!-- ⑦ CLIPBOARD ──────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">07 — Clipboard Events</div>
+      <div class="card">
+        <input class="input" id="clipboardInput" type="text" placeholder="Copy · Cut · Paste here…">
+        <div class="clipboard-actions">
+          <span class="clip-badge" id="badgeCopy">COPY</span>
+          <span class="clip-badge" id="badgeCut">CUT</span>
+          <span class="clip-badge" id="badgePaste">PASTE</span>
+        </div>
+        <div class="log-feed" id="clipLog"></div>
+      </div>
+    </section>
+
+    <!-- ⑧ DRAG & DROP ────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">08 — Drag &amp; Drop Events</div>
+      <div class="card">
+        <div class="dnd-arena">
+          <div class="drag-item" id="dragItem" draggable="true">
+            <span class="drag-icon">✦</span>
+            Drag Me
+          </div>
+          <div class="drop-zone" id="dropZone">
+            <span class="drop-zone-icon">◎</span>
+            Drop Here
+          </div>
+        </div>
+        <div class="log-feed" id="dndLog"></div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      Built with <span>pure DOM events</span> — no frameworks, no shortcuts.
+    </footer>
+
+  </div>
+
+  <script src="dom.js"></script>
+</body>
+</html>

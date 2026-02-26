@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DOM Events Practice</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .box {
+            width: 150px;
+            height: 150px;
+            background: lightblue;
+            text-align: center;
+            line-height: 150px;
+            margin: 10px 0;
+        }
+        #dropZone {
+            width: 200px;
+            height: 150px;
+            border: 2px dashed black;
+            text-align: center;
+            line-height: 150px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>COMMON EVENTS</h2>
+    <button id="clickBtn">Click Me</button>
+    <br><br>
+    <input type="text" id="focusInput" placeholder="Focus & Blur Test">
+
+    <h2>KEYBOARD EVENTS</h2>
+    <input type="text" id="keyboardInput" placeholder="Type Something">
+
+    <h2>FORM EVENTS</h2>
+    <form id="myForm">
+        <input type="text" id="nameInput" placeholder="Enter Name">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>MOUSE EVENTS</h2>
+    <div class="box" id="mouseBox">Hover Me</div>
+
+    <h2>WINDOW EVENTS</h2>
+    <p>Resize or Scroll the window</p>
+
+    <h2>CLIPBOARD EVENTS</h2>
+    <input type="text" id="clipboardInput" placeholder="Copy / Cut / Paste here">
+
+    <h2>DRAG AND DROP EVENTS</h2>
+    <div class="box" id="dragItem" draggable="true">Drag Me</div>
+    <div id="dropZone">Drop Here</div>
+
+    <script src="dom.js"></script>
+</body>
+</html>
