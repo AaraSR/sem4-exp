@@ -1,0 +1,959 @@
+/* ============================================================
+   HANGMAN GAME — Full React Implementation
+   ============================================================ */
+const { useState, useEffect, useRef, useCallback } = React;
+
+// ============================================================
+// WORD DATABASE
+// ============================================================
+const WORD_DB = {
+  easy: [
+    // Animals
+    { word: "CAT",   category: "Animals", hint: "Common house pet" },
+    { word: "DOG",   category: "Animals", hint: "Man's best friend" },
+    { word: "FOX",   category: "Animals", hint: "Sly orange forest creature" },
+    { word: "OWL",   category: "Animals", hint: "Wise night bird" },
+    { word: "PIG",   category: "Animals", hint: "Oink oink!" },
+    { word: "COW",   category: "Animals", hint: "Gives us milk" },
+    { word: "ANT",   category: "Animals", hint: "Tiny colony insect" },
+    { word: "BAT",   category: "Animals", hint: "Flies at night using sonar" },
+    { word: "EMU",   category: "Animals", hint: "Tall flightless Australian bird" },
+    { word: "BEE",   category: "Animals", hint: "Makes honey" },
+    { word: "BEAR",  category: "Animals", hint: "Loves honey and salmon" },
+    { word: "WOLF",  category: "Animals", hint: "Howls at the moon" },
+    { word: "FROG",  category: "Animals", hint: "Jumps and croaks" },
+    { word: "DEER",  category: "Animals", hint: "Has antlers" },
+    { word: "LION",  category: "Animals", hint: "King of the jungle" },
+    { word: "CRAB",  category: "Animals", hint: "Walks sideways" },
+    { word: "DUCK",  category: "Animals", hint: "Quack quack!" },
+    { word: "FISH",  category: "Animals", hint: "Lives underwater" },
+    { word: "MOLE",  category: "Animals", hint: "Digs underground tunnels" },
+    { word: "SWAN",  category: "Animals", hint: "Graceful white water bird" },
+    // Fruits
+    { word: "FIG",   category: "Fruits", hint: "Sweet Mediterranean fruit" },
+    { word: "LIME",  category: "Fruits", hint: "Sour green citrus" },
+    { word: "PLUM",  category: "Fruits", hint: "Purple stone fruit" },
+    { word: "PEAR",  category: "Fruits", hint: "Shaped like a teardrop" },
+    { word: "KIWI",  category: "Fruits", hint: "Fuzzy brown outside, green inside" },
+    { word: "APPLE", category: "Fruits", hint: "Keeps the doctor away" },
+    { word: "GRAPE", category: "Fruits", hint: "Grows in bunches on vines" },
+    { word: "MANGO", category: "Fruits", hint: "Tropical yellow fruit" },
+    { word: "LEMON", category: "Fruits", hint: "Makes you pucker up" },
+    { word: "PEACH", category: "Fruits", hint: "Soft, fuzzy summer fruit" },
+    { word: "DATE",  category: "Fruits", hint: "Sweet fruit from a palm tree" },
+    // Food
+    { word: "PIE",   category: "Food", hint: "Baked in a dish with crust" },
+    { word: "CAKE",  category: "Food", hint: "Birthday table star" },
+    { word: "SOUP",  category: "Food", hint: "Warm liquid meal" },
+    { word: "RICE",  category: "Food", hint: "Staple Asian grain" },
+    { word: "TACO",  category: "Food", hint: "Mexican shell food" },
+    { word: "PIZZA", category: "Food", hint: "Italy's greatest export" },
+    { word: "BREAD", category: "Food", hint: "Made from flour and yeast" },
+    { word: "MILK",  category: "Food", hint: "Comes from cows" },
+    { word: "CORN",  category: "Food", hint: "Yellow on a cob" },
+    { word: "PASTA", category: "Food", hint: "Italian noodle dish" },
+    { word: "CHIP",  category: "Food", hint: "Crispy potato snack" },
+    // Nature
+    { word: "SUN",   category: "Nature", hint: "Our nearest star" },
+    { word: "SEA",   category: "Nature", hint: "Vast body of salt water" },
+    { word: "ICE",   category: "Nature", hint: "Frozen water" },
+    { word: "RAIN",  category: "Nature", hint: "Falls from clouds" },
+    { word: "SNOW",  category: "Nature", hint: "White winter flakes" },
+    { word: "TREE",  category: "Nature", hint: "Tall wooden plant" },
+    { word: "SAND",  category: "Nature", hint: "Found at the beach" },
+    { word: "ROCK",  category: "Nature", hint: "Hard and heavy earth matter" },
+    { word: "LAKE",  category: "Nature", hint: "Inland body of fresh water" },
+    { word: "CAVE",  category: "Nature", hint: "Underground hollow space" },
+    { word: "MOON",  category: "Nature", hint: "Earth's natural satellite" },
+    { word: "STAR",  category: "Nature", hint: "Twinkles in the night sky" },
+    { word: "CLOUD", category: "Nature", hint: "Fluffy white sky puff" },
+    { word: "HILL",  category: "Nature", hint: "Smaller than a mountain" },
+    // Sports & Jobs
+    { word: "GOLF",  category: "Sports", hint: "Hit a tiny ball into a hole" },
+    { word: "SURF",  category: "Sports", hint: "Ride ocean waves" },
+    { word: "RACE",  category: "Sports", hint: "Compete for first place" },
+    { word: "CHESS", category: "Sports", hint: "Strategy board game" },
+    { word: "RUGBY", category: "Sports", hint: "Contact team sport with an oval ball" },
+    { word: "CHEF",  category: "Jobs", hint: "Cooks in a restaurant" },
+    { word: "NURSE", category: "Jobs", hint: "Helps patients in hospital" },
+    { word: "PILOT", category: "Jobs", hint: "Flies an airplane" },
+    { word: "JUDGE", category: "Jobs", hint: "Rules in a court of law" },
+    // Colors & Objects
+    { word: "RED",   category: "Colors", hint: "Color of fire and roses" },
+    { word: "BLUE",  category: "Colors", hint: "Color of the sky and ocean" },
+    { word: "PINK",  category: "Colors", hint: "Lighter shade of red" },
+    { word: "GOLD",  category: "Colors", hint: "Shiny yellow precious metal" },
+    { word: "TEAL",  category: "Colors", hint: "Blue-green mix" },
+    { word: "DRUM",  category: "Music", hint: "You hit this instrument" },
+    { word: "HARP",  category: "Music", hint: "String instrument with a frame" },
+    { word: "FLUTE", category: "Music", hint: "Thin wind instrument" },
+  ],
+
+  medium: [
+    // Animals
+    { word: "MONKEY",   category: "Animals", hint: "Swings from jungle trees" },
+    { word: "JAGUAR",   category: "Animals", hint: "Spotted big cat of the Americas" },
+    { word: "PARROT",   category: "Animals", hint: "Colorful talking tropical bird" },
+    { word: "RABBIT",   category: "Animals", hint: "Hops and has long ears" },
+    { word: "TURTLE",   category: "Animals", hint: "Carries its home on its back" },
+    { word: "LIZARD",   category: "Animals", hint: "Cold-blooded scaly reptile" },
+    { word: "DONKEY",   category: "Animals", hint: "Stubborn beast of burden" },
+    { word: "SALMON",   category: "Animals", hint: "Swims upstream to spawn" },
+    { word: "TOUCAN",   category: "Animals", hint: "Huge colorful beak bird" },
+    { word: "HAMSTER",  category: "Animals", hint: "Loves spinning wheels in a cage" },
+    { word: "LOBSTER",  category: "Animals", hint: "Red clawed seafood delicacy" },
+    { word: "PANTHER",  category: "Animals", hint: "Sleek black big cat" },
+    { word: "GORILLA",  category: "Animals", hint: "Largest primate on Earth" },
+    { word: "GAZELLE",  category: "Animals", hint: "Graceful African deer" },
+    { word: "WARTHOG",  category: "Animals", hint: "Pumba from The Lion King" },
+    { word: "PELICAN",  category: "Animals", hint: "Seabird with a pouch beak" },
+    { word: "OTTER",    category: "Animals", hint: "Cute water mammal that floats" },
+    { word: "FALCON",   category: "Animals", hint: "Fastest bird in the world" },
+    { word: "BADGER",   category: "Animals", hint: "Black and white burrowing mammal" },
+    // Food
+    { word: "BURRITO",  category: "Food", hint: "Wrapped Mexican meal" },
+    { word: "PANCAKE",  category: "Food", hint: "Flat breakfast cake" },
+    { word: "NOODLES",  category: "Food", hint: "Long pasta strips" },
+    { word: "PRETZEL",  category: "Food", hint: "Twisted salty baked snack" },
+    { word: "CHICKEN",  category: "Food", hint: "Most popular poultry" },
+    { word: "LASAGNA",  category: "Food", hint: "Layered Italian pasta bake" },
+    { word: "SAUSAGE",  category: "Food", hint: "Minced meat in a casing" },
+    { word: "POPCORN",  category: "Food", hint: "Movie night snack" },
+    { word: "GRANOLA",  category: "Food", hint: "Healthy crunchy breakfast mix" },
+    { word: "BROWNIE",  category: "Food", hint: "Chocolate fudge square" },
+    { word: "WAFFLE",   category: "Food", hint: "Grid-patterned breakfast treat" },
+    { word: "NACHO",    category: "Food", hint: "Crispy chips with toppings" },
+    { word: "RAMEN",    category: "Food", hint: "Japanese noodle soup" },
+    { word: "FALAFEL",  category: "Food", hint: "Middle Eastern fried chickpea ball" },
+    // Nature
+    { word: "VOLCANO",  category: "Nature", hint: "Mountain of fire" },
+    { word: "TSUNAMI",  category: "Nature", hint: "Gigantic ocean wave" },
+    { word: "TORNADO",  category: "Nature", hint: "Spinning wind funnel" },
+    { word: "GLACIER",  category: "Nature", hint: "Massive slow-moving ice river" },
+    { word: "MONSOON",  category: "Nature", hint: "Heavy seasonal rain" },
+    { word: "BLOSSOM",  category: "Nature", hint: "A flower in full bloom" },
+    { word: "THUNDER",  category: "Nature", hint: "Booming sound of lightning" },
+    { word: "CRYSTAL",  category: "Nature", hint: "Shiny natural mineral formation" },
+    { word: "RAINBOW",  category: "Nature", hint: "Colorful arc after rain" },
+    { word: "ECLIPSE",  category: "Nature", hint: "Sun or moon gets blocked" },
+    { word: "AURORA",   category: "Nature", hint: "Northern or southern lights" },
+    // Technology
+    { word: "LAPTOP",   category: "Technology", hint: "Portable personal computer" },
+    { word: "ROUTER",   category: "Technology", hint: "Sends WiFi signals to devices" },
+    { word: "SERVER",   category: "Technology", hint: "Stores and serves data online" },
+    { word: "TABLET",   category: "Technology", hint: "Touch screen flat device" },
+    { word: "PRINTER",  category: "Technology", hint: "Makes paper copies of files" },
+    { word: "SCANNER",  category: "Technology", hint: "Digitizes paper documents" },
+    { word: "MONITOR",  category: "Technology", hint: "Computer display screen" },
+    { word: "BROWSER",  category: "Technology", hint: "You surf the web with this" },
+    { word: "NETWORK",  category: "Technology", hint: "Connected computers sharing data" },
+    { word: "STORAGE",  category: "Technology", hint: "Where all your files live" },
+    { word: "ANTENNA",  category: "Technology", hint: "Sends and receives signals" },
+    { word: "PODCAST",  category: "Technology", hint: "Audio show you stream online" },
+    // Sports
+    { word: "CRICKET",  category: "Sports", hint: "Bat and ball sport" },
+    { word: "ARCHERY",  category: "Sports", hint: "Shoot arrows at targets" },
+    { word: "BOWLING",  category: "Sports", hint: "Knock down the pins!" },
+    { word: "CYCLING",  category: "Sports", hint: "Pedal-powered sport" },
+    { word: "FENCING",  category: "Sports", hint: "Elegant sword fighting sport" },
+    { word: "SKATING",  category: "Sports", hint: "Glide on ice or wheels" },
+    { word: "TENNIS",   category: "Sports", hint: "Racket sport across a net" },
+    { word: "KARATE",   category: "Sports", hint: "Japanese martial art" },
+    { word: "SOCCER",   category: "Sports", hint: "Kick the ball into the net" },
+    { word: "BOXING",   category: "Sports", hint: "Two fighters in a ring" },
+    { word: "ROWING",   category: "Sports", hint: "Paddle a boat in a race" },
+    // Places
+    { word: "KITCHEN",  category: "Places", hint: "Where meals are prepared" },
+    { word: "LIBRARY",  category: "Places", hint: "Quiet home of many books" },
+    { word: "STADIUM",  category: "Places", hint: "Where sports matches happen" },
+    { word: "AIRPORT",  category: "Places", hint: "Planes take off and land here" },
+    { word: "COTTAGE",  category: "Places", hint: "Cozy small countryside house" },
+    { word: "DUNGEON",  category: "Places", hint: "Underground prison or cellar" },
+    { word: "FACTORY",  category: "Places", hint: "Where products are manufactured" },
+    { word: "HARBOUR",  category: "Places", hint: "Where boats and ships dock" },
+    { word: "ROOFTOP",  category: "Places", hint: "Top surface of a building" },
+    { word: "BALCONY",  category: "Places", hint: "Outdoor platform on a building" },
+    // Jobs
+    { word: "SURGEON",  category: "Jobs", hint: "Operates on patients in hospital" },
+    { word: "TEACHER",  category: "Jobs", hint: "Educates students every day" },
+    { word: "PLUMBER",  category: "Jobs", hint: "Fixes pipes and drains" },
+    { word: "PAINTER",  category: "Jobs", hint: "Creates art or paints walls" },
+    { word: "DENTIST",  category: "Jobs", hint: "Keeps your teeth healthy" },
+    { word: "SOLDIER",  category: "Jobs", hint: "Defends the country" },
+    { word: "CAPTAIN",  category: "Jobs", hint: "Commands a ship or team" },
+    { word: "CASHIER",  category: "Jobs", hint: "Works at a checkout counter" },
+    { word: "ANALYST",  category: "Jobs", hint: "Studies and interprets data" },
+    { word: "FLORIST",  category: "Jobs", hint: "Sells and arranges flowers" },
+    // Movies
+    { word: "WESTERN",  category: "Movies", hint: "Cowboy genre films" },
+    { word: "FANTASY",  category: "Movies", hint: "Magic and imagination genre" },
+    { word: "THRILLER", category: "Movies", hint: "Suspenseful movie genre" },
+    { word: "CARTOON",  category: "Movies", hint: "Animated movie or show" },
+    { word: "MUSICAL",  category: "Movies", hint: "Characters sing and dance" },
+    { word: "SEQUEL",   category: "Movies", hint: "Second film in a series" },
+    { word: "TRAILER",  category: "Movies", hint: "Short preview of a movie" },
+    { word: "COMEDY",   category: "Movies", hint: "A film that makes you laugh" },
+  ],
+
+  hard: [
+    // Animals
+    { word: "HIPPOPOTAMUS",    category: "Animals", hint: "Large semiaquatic African mammal" },
+    { word: "CHIMPANZEE",      category: "Animals", hint: "Our closest primate cousin" },
+    { word: "RHINOCEROS",      category: "Animals", hint: "Large horned African mammal" },
+    { word: "SALAMANDER",      category: "Animals", hint: "Fire-legend amphibian" },
+    { word: "CROCODILE",       category: "Animals", hint: "Ancient apex reptile predator" },
+    { word: "WOLVERINE",       category: "Animals", hint: "Fierce compact predator mammal" },
+    { word: "PORCUPINE",       category: "Animals", hint: "Covered in sharp protective quills" },
+    { word: "ALBATROSS",       category: "Animals", hint: "Largest flying seabird" },
+    { word: "CHAMELEON",       category: "Animals", hint: "Master of colour disguise" },
+    { word: "DRAGONFLY",       category: "Animals", hint: "Iridescent hovering insect" },
+    { word: "ORANGUTAN",       category: "Animals", hint: "Red-haired great ape of Borneo" },
+    { word: "BARRACUDA",       category: "Animals", hint: "Ferocious long-bodied ocean fish" },
+    { word: "CASSOWARY",       category: "Animals", hint: "Dangerous giant flightless bird" },
+    { word: "PLATYPUS",        category: "Animals", hint: "Egg-laying venomous mammal" },
+    { word: "KOMODO",          category: "Animals", hint: "World's largest living lizard" },
+    // Science
+    { word: "PHOTOSYNTHESIS",  category: "Science", hint: "How plants convert sunlight to food" },
+    { word: "METAMORPHOSIS",   category: "Science", hint: "Caterpillar-to-butterfly transformation" },
+    { word: "ELECTRICITY",     category: "Science", hint: "Flow of electric charge that powers homes" },
+    { word: "CHROMOSOMES",     category: "Science", hint: "Structures in cells that carry your DNA" },
+    { word: "TEMPERATURE",     category: "Science", hint: "Measured with a thermometer in degrees" },
+    { word: "ATMOSPHERE",      category: "Science", hint: "Layer of gases surrounding a planet" },
+    { word: "EVAPORATION",     category: "Science", hint: "Liquid slowly turning into vapour" },
+    { word: "HIBERNATION",     category: "Science", hint: "Animals sleeping through winter" },
+    { word: "VACCINATION",     category: "Science", hint: "Injection that prevents disease" },
+    { word: "FERMENTATION",    category: "Science", hint: "How yeast makes bread rise or beer form" },
+    { word: "BIODIVERSITY",    category: "Science", hint: "Variety of life on Earth" },
+    { word: "THERMODYNAMICS",  category: "Science", hint: "Physics of heat and energy transfer" },
+    { word: "CONDENSATION",    category: "Science", hint: "Water droplets forming on cold surfaces" },
+    { word: "RESPIRATION",     category: "Science", hint: "How living things release energy" },
+    { word: "GRAVITATIONAL",   category: "Science", hint: "Relating to the force of gravity" },
+    // Technology
+    { word: "CRYPTOGRAPHY",    category: "Technology", hint: "Science of secret codes and ciphers" },
+    { word: "MICROPROCESSOR",  category: "Technology", hint: "Tiny brain of every computer" },
+    { word: "BIOTECHNOLOGY",   category: "Technology", hint: "Using biology for technological solutions" },
+    { word: "PROGRAMMING",     category: "Technology", hint: "Writing instructions for computers" },
+    { word: "CYBERSECURITY",   category: "Technology", hint: "Protecting digital systems from attack" },
+    { word: "NANOTECHNOLOGY",  category: "Technology", hint: "Engineering on an atomic scale" },
+    { word: "BLOCKCHAIN",      category: "Technology", hint: "Decentralized digital ledger technology" },
+    { word: "ALGORITHM",       category: "Technology", hint: "Step-by-step computational problem-solver" },
+    { word: "BANDWIDTH",       category: "Technology", hint: "Data transfer rate capacity" },
+    { word: "ENCRYPTION",      category: "Technology", hint: "Converting data into a coded format" },
+    { word: "PROCESSOR",       category: "Technology", hint: "Chip that executes computer instructions" },
+    // Abstract Concepts
+    { word: "IMAGINATION",     category: "Concepts", hint: "The ability to form mental images" },
+    { word: "INSPIRATION",     category: "Concepts", hint: "The spark that drives creativity" },
+    { word: "INDEPENDENCE",    category: "Concepts", hint: "Being free and self-reliant" },
+    { word: "TRANSFORMATION",  category: "Concepts", hint: "A complete and dramatic change" },
+    { word: "REPRESENTATION",  category: "Concepts", hint: "Acting or standing in for something else" },
+    { word: "PHILOSOPHICAL",   category: "Concepts", hint: "Relating to the study of wisdom" },
+    { word: "UNDERSTANDING",   category: "Concepts", hint: "Deep comprehension of something" },
+    { word: "INVESTIGATION",   category: "Concepts", hint: "Careful systematic examination" },
+    { word: "RESPONSIBILITY",  category: "Concepts", hint: "Being accountable for your actions" },
+    { word: "EXTRAORDINARY",   category: "Concepts", hint: "Going beyond what is ordinary" },
+    { word: "CONTROVERSIAL",   category: "Concepts", hint: "Something that causes disagreement" },
+    { word: "ENTERTAINMENT",   category: "Concepts", hint: "What fun and leisure provides" },
+    { word: "SOPHISTICATED",   category: "Concepts", hint: "Complex, refined, and worldly" },
+    { word: "CONCENTRATION",   category: "Concepts", hint: "Deep focused attention on a task" },
+    { word: "COLLABORATION",   category: "Concepts", hint: "Working together toward a goal" },
+    { word: "DETERMINATION",   category: "Concepts", hint: "Firmness of purpose, never giving up" },
+    { word: "PERSEVERANCE",    category: "Concepts", hint: "Continuing despite obstacles" },
+    { word: "VULNERABILITY",   category: "Concepts", hint: "The state of being open to harm" },
+    { word: "CONTRADICTION",   category: "Concepts", hint: "Two conflicting ideas at once" },
+    { word: "MANIPULATION",    category: "Concepts", hint: "Controlling someone in a clever way" },
+    // Countries
+    { word: "SWITZERLAND",     category: "Countries", hint: "Famous for chocolate, watches and Alps" },
+    { word: "PHILIPPINES",     category: "Countries", hint: "Archipelago nation in Southeast Asia" },
+    { word: "MOZAMBIQUE",      category: "Countries", hint: "Coastal Southern African nation" },
+    { word: "AZERBAIJAN",      category: "Countries", hint: "Caspian Sea Caucasus country" },
+    { word: "MADAGASCAR",      category: "Countries", hint: "Large island nation with unique lemurs" },
+    { word: "LUXEMBOURG",      category: "Countries", hint: "Tiny wealthy European Grand Duchy" },
+    { word: "BANGLADESH",      category: "Countries", hint: "Bay of Bengal densely populated nation" },
+    { word: "UZBEKISTAN",      category: "Countries", hint: "Ancient Silk Road Central Asian nation" },
+    { word: "KAZAKHSTAN",      category: "Countries", hint: "World's largest landlocked country" },
+    { word: "AFGHANISTAN",     category: "Countries", hint: "Landlocked South-Central Asian country" },
+    // Academic / Study fields
+    { word: "ARCHAEOLOGY",     category: "Academic", hint: "Study of ancient civilizations and artefacts" },
+    { word: "ARCHITECTURE",    category: "Academic", hint: "Design and construction of buildings" },
+    { word: "MATHEMATICS",     category: "Academic", hint: "Study of numbers, patterns and proofs" },
+    { word: "ANTHROPOLOGY",    category: "Academic", hint: "Study of human societies and cultures" },
+    { word: "CRIMINOLOGY",     category: "Academic", hint: "Scientific study of crime and criminals" },
+    { word: "PSYCHOLOGY",      category: "Academic", hint: "Study of the mind and behaviour" },
+    { word: "PHILOSOPHY",      category: "Academic", hint: "Love of wisdom and deep thinking" },
+    { word: "LINGUISTICS",     category: "Academic", hint: "Scientific study of language" },
+    { word: "ASTRONOMER",      category: "Academic", hint: "Scientist who studies stars and galaxies" },
+    { word: "GEOLOGIST",       category: "Academic", hint: "Scientist who studies rocks and earth" },
+    // Objects & Nature
+    { word: "KALEIDOSCOPE",    category: "Objects", hint: "Rotating colourful pattern toy" },
+    { word: "THERMOMETER",     category: "Objects", hint: "Instrument for measuring temperature" },
+    { word: "ENCYCLOPEDIA",    category: "Objects", hint: "Comprehensive reference book of knowledge" },
+    { word: "THUNDERSTORM",    category: "Nature", hint: "Storm with lightning, thunder and heavy rain" },
+    { word: "CONSTELLATION",   category: "Space", hint: "Named pattern of stars in the night sky" },
+    { word: "PLANETARIUM",     category: "Space", hint: "Dome-shaped building showing star projections" },
+    { word: "OBSERVATORY",     category: "Space", hint: "Where astronomers point telescopes at space" },
+    { word: "SUPERNOVA",       category: "Space", hint: "The cataclysmic explosion of a dying star" },
+    { word: "EXOPLANET",       category: "Space", hint: "A planet orbiting a star outside our solar system" },
+    { word: "SPACECRAFT",      category: "Space", hint: "Vehicle designed to travel in outer space" },
+    { word: "ASTRONAUT",       category: "Space", hint: "Person trained to travel beyond Earth" },
+    { word: "METEORITE",       category: "Space", hint: "Space rock that reaches Earth's surface" },
+    { word: "ATMOSPHERE",      category: "Space", hint: "Gaseous envelope surrounding a planet" },
+    { word: "TELEPORTATION",   category: "Concepts", hint: "Sci-fi instant transportation of matter" },
+    { word: "HALLUCINATION",   category: "Science", hint: "Perceiving something that isn't really there" },
+    { word: "DECOMPOSITION",   category: "Science", hint: "Organic matter breaking down naturally" },
+    { word: "INFRASTRUCTURE",  category: "Concepts", hint: "Basic systems a society depends on" },
+    { word: "PRONUNCIATION",   category: "Academic", hint: "The way a word is spoken aloud" },
+    { word: "MANIFESTATION",   category: "Concepts", hint: "Making something abstract become real" },
+    { word: "HALLUCINATION",   category: "Science", hint: "A false sensory experience of the mind" },
+    { word: "BUREAUCRACY",     category: "Concepts", hint: "Complex system of rules and officials" },
+    { word: "ENTREPRENEUR",    category: "Jobs", hint: "Person who starts their own business" },
+    { word: "REFRIGERATOR",    category: "Objects", hint: "Kitchen appliance that keeps food cold" },
+    { word: "PARLIAMENTARY",   category: "Concepts", hint: "Relating to a governing parliament" },
+    { word: "CHOREOGRAPHER",   category: "Jobs", hint: "Person who designs dance routines" },
+    { word: "DISAPPOINTMENT",  category: "Concepts", hint: "The feeling when expectations aren't met" },
+  ]
+};
+
+// ============================================================
+// MODE & DIFFICULTY CONFIG
+// ============================================================
+const MODES = {
+  normal: {
+    name: "Normal Mode",
+    emoji: "🎮",
+    maxWrong: 6,
+    timer: null,
+    color: "#4ECDC4",
+    shadow: "#2ba39c",
+    description: "Classic hangman! Guess the word one letter at a time before the hangman is fully drawn. You have 6 chances — make them count!",
+  },
+  timetrial: {
+    name: "Time Trial",
+    emoji: "⏱️",
+    maxWrong: 6,
+    timer: 30,
+    color: "#FF6B6B",
+    shadow: "#c0392b",
+    description: "Race against the clock! You have 30 seconds to guess as many words as possible. Each correct word scores you 1 point. Go go go!",
+  },
+  hardcore: {
+    name: "Hardcore Mode",
+    emoji: "💀",
+    maxWrong: 1,
+    timer: null,
+    color: "#A78BFA",
+    shadow: "#6d28d9",
+    description: "One strike and you're OUT! A single wrong letter spells instant Game Over. Only the bravest dare attempt Hardcore Mode. Are you brave enough?",
+  },
+};
+
+const DIFFICULTIES = {
+  easy:   { name: "Easy",   emoji: "😊", color: "#4ADE80", shadow: "#16a34a", desc: "Short words (3–6 letters)" },
+  medium: { name: "Medium", emoji: "😐", color: "#FBBF24", shadow: "#b45309", desc: "Medium words (6–9 letters)" },
+  hard:   { name: "Hard",   emoji: "😰", color: "#F87171", shadow: "#b91c1c", desc: "Long complex words (9+ letters)" },
+};
+
+const KEYBOARD_ROWS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+
+// Pick a random word from the given difficulty pool
+function pickWord(difficulty) {
+  const pool = WORD_DB[difficulty];
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// ============================================================
+// HANGMAN SVG DRAWING COMPONENT
+// ============================================================
+function HangmanDrawing({ wrongCount, isLost }) {
+  const visible = (idx) => idx < wrongCount;
+
+  return (
+    <svg viewBox="0 0 196 230" width="208" height="244" xmlns="http://www.w3.org/2000/svg">
+      <style>{`
+        .gal { stroke: #5C4033; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+        .part { stroke: #FF6B6B; stroke-linecap: round; stroke-linejoin: round; }
+        .part-fill { fill: #FF6B6B; stroke: #CC3333; }
+        .hm-part { transition: opacity 0.5s ease; }
+      `}</style>
+
+      {/* Gallows */}
+      <line className="gal" x1="20"  y1="215" x2="176" y2="215" strokeWidth="7"/>
+      <line className="gal" x1="50"  y1="215" x2="50"  y2="20"  strokeWidth="6"/>
+      <line className="gal" x1="50"  y1="20"  x2="120" y2="20"  strokeWidth="6"/>
+      <line className="gal" x1="120" y1="20"  x2="120" y2="42"  strokeWidth="4"/>
+      <path className="gal" d="M20 220 Q30 215 40 220 Q50 215 60 220 Q70 215 80 220 Q90 215 100 220 Q110 215 120 220 Q130 215 140 220 Q150 215 160 220 Q170 215 176 220" strokeWidth="2" opacity="0.3"/>
+
+      {/* Head */}
+      <g className="hm-part" style={{ opacity: visible(0) ? 1 : 0 }}>
+        <circle cx="120" cy="58" r="18" className="part-fill" strokeWidth="2.5"/>
+        <circle cx="114" cy="54" r="3" fill="white"/>
+        <circle cx="126" cy="54" r="3" fill="white"/>
+        <circle cx="115" cy="55" r="1.5" fill="#CC3333"/>
+        <circle cx="127" cy="55" r="1.5" fill="#CC3333"/>
+        <path d="M114 63 Q120 68 126 63" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+      </g>
+
+      {/* Body */}
+      <g className="hm-part" style={{ opacity: visible(1) ? 1 : 0 }}>
+        <line x1="120" y1="76" x2="120" y2="135" className="part" strokeWidth="6"/>
+        <ellipse cx="120" cy="105" rx="14" ry="18" fill="#FF8888" stroke="#CC3333" strokeWidth="1.5" opacity="0.5"/>
+      </g>
+
+      {/* Left arm */}
+      <g className="hm-part" style={{ opacity: visible(2) ? 1 : 0 }}>
+        <line x1="120" y1="90" x2="90" y2="115" className="part" strokeWidth="5"/>
+        <circle cx="90" cy="115" r="5" fill="#FF6B6B" stroke="#CC3333" strokeWidth="1.5"/>
+      </g>
+
+      {/* Right arm */}
+      <g className="hm-part" style={{ opacity: visible(3) ? 1 : 0 }}>
+        <line x1="120" y1="90" x2="150" y2="115" className="part" strokeWidth="5"/>
+        <circle cx="150" cy="115" r="5" fill="#FF6B6B" stroke="#CC3333" strokeWidth="1.5"/>
+      </g>
+
+      {/* Left leg */}
+      <g className="hm-part" style={{ opacity: visible(4) ? 1 : 0 }}>
+        <line x1="120" y1="135" x2="90" y2="175" className="part" strokeWidth="5"/>
+        <ellipse cx="86" cy="179" rx="7" ry="5" fill="#FF6B6B" stroke="#CC3333" strokeWidth="1.5" transform="rotate(-30 86 179)"/>
+      </g>
+
+      {/* Right leg */}
+      <g className="hm-part" style={{ opacity: visible(5) ? 1 : 0 }}>
+        <line x1="120" y1="135" x2="150" y2="175" className="part" strokeWidth="5"/>
+        <ellipse cx="154" cy="179" rx="7" ry="5" fill="#FF6B6B" stroke="#CC3333" strokeWidth="1.5" transform="rotate(30 154 179)"/>
+      </g>
+
+      {/* Dead X-eyes (only on loss) */}
+      <g className="hm-part" style={{ opacity: isLost ? 1 : 0 }}>
+        <line x1="111" y1="51" x2="117" y2="57" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <line x1="117" y1="51" x2="111" y2="57" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <line x1="123" y1="51" x2="129" y2="57" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <line x1="129" y1="51" x2="123" y2="57" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <path d="M114 65 Q120 61 126 65" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+      </g>
+    </svg>
+  );
+}
+
+// ============================================================
+// WORD DISPLAY COMPONENT
+// ============================================================
+function WordDisplay({ word, guessed }) {
+  return (
+    <div className="hm-word-display">
+      {word.split("").map((ch, i) => {
+        if (ch === " ") {
+          return (
+            <div key={i} className="letter-slot space">
+              <div className="letter-char"> </div>
+              <div className="letter-dash"></div>
+            </div>
+          );
+        }
+        const revealed = guessed.has(ch);
+        return (
+          <div key={i} className={`letter-slot${revealed ? " revealed" : ""}`}>
+            <div className={`letter-char${revealed ? " revealed" : ""}`}>
+              {revealed ? ch : ""}
+            </div>
+            <div className="letter-dash"></div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ============================================================
+// KEYBOARD COMPONENT
+// ============================================================
+function Keyboard({ guessed, word, onGuess, disabled }) {
+  return (
+    <div id="keyboard-rows">
+      {KEYBOARD_ROWS.map((row) => (
+        <div key={row} className="kb-row">
+          {row.split("").map((letter) => {
+            const isGuessed = guessed.has(letter);
+            const isCorrect = isGuessed && word.includes(letter);
+            const isWrong   = isGuessed && !word.includes(letter);
+            return (
+              <button
+                key={letter}
+                className={`kb-btn${isCorrect ? " correct" : ""}${isWrong ? " wrong" : ""}`}
+                disabled={isGuessed || disabled}
+                onClick={() => onGuess(letter)}
+              >
+                {letter}
+              </button>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ============================================================
+// LIVES BAR COMPONENT
+// ============================================================
+function LivesBar({ wrongCount, maxWrong }) {
+  return (
+    <div className="lives-bar">
+      {Array.from({ length: maxWrong }, (_, i) => (
+        <span key={i} className={`life-heart${i >= maxWrong - wrongCount ? "" : " lost"}`}>
+          ❤️
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// ============================================================
+// HOME PAGE
+// ============================================================
+function HomePage({ onPlay }) {
+  return (
+    <div>
+      <div className="hm-main">
+        <div className="hm-left">
+          <div className="hm-svg-wrap">
+            <HangmanDrawing wrongCount={0} isLost={false} />
+          </div>
+          <div className="home-tagline">Can you save him? 🙏</div>
+        </div>
+        <div className="hm-right home-right">
+          <div className="home-welcome">
+            <span className="welcome-emoji">🎪</span>
+            <h2 className="welcome-title">Ready to play?</h2>
+            <p className="welcome-sub">
+              Guess the secret word letter by letter before the hangman meets his fate!
+            </p>
+          </div>
+          <button className="btn-play" onClick={onPlay}>
+            ▶ PLAY!
+          </button>
+          <div className="home-badges">
+            <span className="badge-pill">🎮 3 Game Modes</span>
+            <span className="badge-pill">📚 3 Difficulties</span>
+            <span className="badge-pill">✏️ 240+ Words</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// MODE SELECTION
+// ============================================================
+function ModeSelection({ onSelect, onBack }) {
+  return (
+    <div>
+      <div className="hm-main">
+        <div className="hm-left">
+          <div className="hm-svg-wrap">
+            <HangmanDrawing wrongCount={0} isLost={false} />
+          </div>
+        </div>
+        <div className="hm-right">
+          <div className="selection-header">
+            <div className="sel-label">🎯 Choose Your Mode</div>
+          </div>
+          <div className="mode-cards">
+            {Object.entries(MODES).map(([key, mode]) => (
+              <button
+                key={key}
+                className="mode-card"
+                style={{ "--mc": mode.color, "--ms": mode.shadow }}
+                onClick={() => onSelect(key)}
+              >
+                <span className="mode-emoji">{mode.emoji}</span>
+                <div>
+                  <div className="mode-name">{mode.name}</div>
+                  <span className="mode-tiny-desc">
+                    {key === "normal"    && "6 wrong guesses allowed"}
+                    {key === "timetrial" && "30 seconds — max score!"}
+                    {key === "hardcore"  && "One strike = instant game over!"}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+          <button className="btn-back" onClick={onBack}>← Back</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// DIFFICULTY SELECTION
+// ============================================================
+function DifficultySelection({ mode, onSelect, onBack }) {
+  return (
+    <div>
+      <div className="hm-main">
+        <div className="hm-left">
+          <div className="hm-svg-wrap">
+            <HangmanDrawing wrongCount={0} isLost={false} />
+          </div>
+        </div>
+        <div className="hm-right">
+          <div className="selection-header">
+            <div className="sel-label">⚡ Pick Difficulty</div>
+            <div className="sel-mode-badge">{MODES[mode].emoji} {MODES[mode].name}</div>
+          </div>
+          <div className="diff-cards">
+            {Object.entries(DIFFICULTIES).map(([key, diff]) => (
+              <button
+                key={key}
+                className="diff-card"
+                style={{ "--dc": diff.color, "--ds": diff.shadow }}
+                onClick={() => onSelect(key)}
+              >
+                <span className="diff-emoji">{diff.emoji}</span>
+                <div>
+                  <div className="diff-name">{diff.name}</div>
+                  <div className="diff-desc">{diff.desc}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+          <button className="btn-back" onClick={onBack}>← Back</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// MODE DESCRIPTION
+// ============================================================
+function ModeDescription({ mode, difficulty, onStart, onBack }) {
+  const m = MODES[mode];
+  const d = DIFFICULTIES[difficulty];
+  return (
+    <div>
+      <div className="hm-main">
+        <div className="hm-left">
+          <div className="hm-svg-wrap">
+            <HangmanDrawing wrongCount={0} isLost={false} />
+          </div>
+        </div>
+        <div className="hm-right">
+          <div className="desc-card" style={{ "--mc": m.color }}>
+            <div className="desc-icon">{m.emoji}</div>
+            <h3 className="desc-title">{m.name}</h3>
+            <p className="desc-text">{m.description}</p>
+            <div className="desc-pills">
+              <span className="desc-pill" style={{ background: d.color, color: "#1a1a1a" }}>
+                {d.emoji} {d.name}
+              </span>
+              {m.timer && (
+                <span className="desc-pill" style={{ background: "#FFE66D", color: "#1a1a1a" }}>
+                  ⏱️ {m.timer}s
+                </span>
+              )}
+              <span className="desc-pill" style={{ background: "#E0E7FF", color: "#1a1a1a" }}>
+                💔 {m.maxWrong === 1 ? "1 life" : `${m.maxWrong} lives`}
+              </span>
+            </div>
+          </div>
+          <button
+            className="btn-start"
+            style={{ "--mc": m.color, "--ms": m.shadow }}
+            onClick={onStart}
+          >
+            🚀 START GAME!
+          </button>
+          <button className="btn-back" onClick={onBack}>← Back</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// GAME RESULT OVERLAY
+// ============================================================
+function GameResult({ won, isTimeout, word, mode, score, onPlayAgain, onHome }) {
+  let emoji, title, overlayClass;
+  if (isTimeout) {
+    emoji = score > 0 ? "⏰" : "💀";
+    title = "Time's Up!";
+    overlayClass = "timeout";
+  } else if (won) {
+    emoji = "🎉";
+    title = "You Win!";
+    overlayClass = "win";
+  } else {
+    emoji = "💀";
+    title = "Game Over!";
+    overlayClass = "lose";
+  }
+
+  return (
+    <div className={`result-overlay ${overlayClass}`}>
+      <div className="result-card">
+        <span className="result-emoji">{emoji}</span>
+        <h2 className="result-title">{title}</h2>
+        {mode === "timetrial" && (
+          <div>
+            <div className="result-score">
+              🌟 Score: <strong>{score}</strong> {score === 1 ? "word" : "words"}
+            </div>
+          </div>
+        )}
+        <div className="result-word">
+          The word was: <strong>{word}</strong>
+        </div>
+        <div className="result-buttons">
+          <button className="btn-play-again" onClick={onPlayAgain}>🔄 Play Again</button>
+          <button className="btn-home-small" onClick={onHome}>🏠 Home</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// GAME BOARD
+// ============================================================
+function GameBoard({ mode, difficulty, onHome }) {
+  const modeConfig = MODES[mode];
+  const maxWrong   = modeConfig.maxWrong;
+
+  const [wordData,       setWordData]       = useState(() => pickWord(difficulty));
+  const [guessed,        setGuessed]        = useState(() => new Set());
+  const [wrongCount,     setWrongCount]     = useState(0);
+  const [gameOver,       setGameOver]       = useState(false);
+  const [won,            setWon]            = useState(false);
+  const [isTimeout,      setIsTimeout]      = useState(false);
+  const [score,          setScore]          = useState(0);
+  const [timeLeft,       setTimeLeft]       = useState(modeConfig.timer || 0);
+  const [timerActive,    setTimerActive]    = useState(mode === "timetrial");
+  const [showFlash,      setShowFlash]      = useState(false);
+
+  const word     = wordData.word;
+  const category = wordData.category;
+  const hint     = wordData.hint;
+
+  // ---- Timer countdown (Time Trial only) ----
+  useEffect(() => {
+    if (mode !== "timetrial" || !timerActive || gameOver) return;
+    if (timeLeft <= 0) {
+      setTimerActive(false);
+      setGameOver(true);
+      setIsTimeout(true);
+      return;
+    }
+    const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
+    return () => clearTimeout(t);
+  }, [timeLeft, timerActive, mode, gameOver]);
+
+  // ---- Physical keyboard handler ----
+  useEffect(() => {
+    const onKey = (e) => {
+      const l = e.key.toUpperCase();
+      if (/^[A-Z]$/.test(l)) handleGuess(l);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  });
+
+  function handleGuess(letter) {
+    if (gameOver || guessed.has(letter)) return;
+
+    const newGuessed = new Set(guessed);
+    newGuessed.add(letter);
+
+    let newWrongCount = wrongCount;
+    const letterInWord = word.includes(letter);
+
+    if (!letterInWord) {
+      newWrongCount = wrongCount + 1;
+    }
+
+    setGuessed(newGuessed);
+    setWrongCount(newWrongCount);
+
+    // Check win
+    const allRevealed = word
+      .split("")
+      .filter((c) => c !== " ")
+      .every((c) => newGuessed.has(c));
+
+    if (allRevealed) {
+      if (mode === "timetrial") {
+        // +1 score, load new word immediately
+        setScore((s) => s + 1);
+        setWordData(pickWord(difficulty));
+        setGuessed(new Set());
+        setWrongCount(0);
+        setShowFlash(true);
+        setTimeout(() => setShowFlash(false), 800);
+      } else {
+        setGameOver(true);
+        setWon(true);
+      }
+      return;
+    }
+
+    // Check lose
+    const hardcoreFail = mode === "hardcore" && !letterInWord;
+    const normalFail   = newWrongCount >= maxWrong;
+
+    if (hardcoreFail || normalFail) {
+      setWrongCount(maxWrong); // show full hangman
+      setGameOver(true);
+      setWon(false);
+    }
+  }
+
+  function handlePlayAgain() {
+    setWordData(pickWord(difficulty));
+    setGuessed(new Set());
+    setWrongCount(0);
+    setGameOver(false);
+    setWon(false);
+    setIsTimeout(false);
+    if (mode === "timetrial") {
+      setScore(0);
+      setTimeLeft(modeConfig.timer);
+      setTimerActive(true);
+    }
+  }
+
+  const wrongLetters = [...guessed].filter((l) => !word.includes(l));
+  const isLost       = gameOver && !won;
+
+  return (
+    <div style={{ position: "relative" }}>
+      {/* Time Trial HUD */}
+      {mode === "timetrial" && (
+        <div className="tt-bar">
+          <div className={`tt-timer${timeLeft <= 10 ? " danger" : ""}`}>
+            ⏱️ {timeLeft}s
+          </div>
+          <div className="tt-score">⭐ Score: {score}</div>
+          {showFlash && <div className="tt-flash">+1 ✨</div>}
+        </div>
+      )}
+
+      <div className="hm-main">
+        <div className="hm-left">
+          <div className="hm-svg-wrap">
+            <HangmanDrawing wrongCount={wrongCount} isLost={isLost} />
+          </div>
+          <LivesBar wrongCount={wrongCount} maxWrong={maxWrong} />
+          {wrongLetters.length > 0 && (
+            <div className="wrong-letters">✗ {wrongLetters.join("  ")}</div>
+          )}
+          {mode === "hardcore" && (
+            <div className="hardcore-badge">💀 ONE CHANCE!</div>
+          )}
+        </div>
+
+        <div className="hm-right">
+          <div className="hm-category-box">
+            <div className="cat-label">🏷 Category</div>
+            <div className="cat-name">{category}</div>
+            <div className="hm-hint">💡 {hint}</div>
+          </div>
+
+          <div className="hm-word-box">
+            <div className="word-label">🔤 Word to Guess</div>
+            <WordDisplay word={word} guessed={guessed} />
+          </div>
+        </div>
+      </div>
+
+      <div className="hm-keyboard">
+        <div className="kb-label">⌨️ Pick a Letter</div>
+        <Keyboard
+          guessed={guessed}
+          word={word}
+          onGuess={handleGuess}
+          disabled={gameOver}
+        />
+      </div>
+
+      {/* Game Result Overlay */}
+      {gameOver && (
+        <GameResult
+          won={won}
+          isTimeout={isTimeout}
+          word={word}
+          mode={mode}
+          score={score}
+          onPlayAgain={handlePlayAgain}
+          onHome={onHome}
+        />
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// APP — ROOT COMPONENT
+// ============================================================
+function App() {
+  const [screen,     setScreen]     = useState("home");
+  const [mode,       setMode]       = useState(null);
+  const [difficulty, setDifficulty] = useState(null);
+
+  const goHome = () => {
+    setScreen("home");
+    setMode(null);
+    setDifficulty(null);
+  };
+
+  return (
+    <div>
+      <h1 className="hm-title">🎪 HANGMAN!</h1>
+      <p className="hm-subtitle">Guess the word before it's too late!</p>
+
+      {screen === "home" && (
+        <HomePage onPlay={() => setScreen("modeSelect")} />
+      )}
+
+      {screen === "modeSelect" && (
+        <ModeSelection
+          onSelect={(m) => { setMode(m); setScreen("diffSelect"); }}
+          onBack={goHome}
+        />
+      )}
+
+      {screen === "diffSelect" && (
+        <DifficultySelection
+          mode={mode}
+          onSelect={(d) => { setDifficulty(d); setScreen("modeDesc"); }}
+          onBack={() => setScreen("modeSelect")}
+        />
+      )}
+
+      {screen === "modeDesc" && (
+        <ModeDescription
+          mode={mode}
+          difficulty={difficulty}
+          onStart={() => setScreen("game")}
+          onBack={() => setScreen("diffSelect")}
+        />
+      )}
+
+      {screen === "game" && (
+        <GameBoard
+          key={`${mode}-${difficulty}-${Date.now()}`}
+          mode={mode}
+          difficulty={difficulty}
+          onHome={goHome}
+        />
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// MOUNT
+// ============================================================
+const root = ReactDOM.createRoot(document.getElementById("hm-root"));
+root.render(<App />);

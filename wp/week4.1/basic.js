@@ -1,6 +1,6 @@
 console.log("Hello World!");
 
-let myName = "ToxRA";
+let myName = "AaraSR";
 const age = 19;
 
 console.log(`My name is ${myName} and I am ${age} years old.`);
@@ -14,10 +14,8 @@ console.log(`Substracting ${a} and ${b}: ${a-b}`)
 console.log(`Multiplying ${a} and ${b}: ${a*b}`)
 console.log(`Dividing ${a} and ${b}: ${a/b}`)
 
-// const marks = 49;
 
-// user input :  prompt("Enter marks:");
-const marks = prompt("Enter marks:");
+const marks = 49;
 
 if(marks >= 50) {
     console.log("Passed");
