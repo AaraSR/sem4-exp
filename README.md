@@ -17,7 +17,7 @@ The repository is intended for academic reference, peer collaboration, and perso
 ```
 sem4-exp/
 │
-├── ccl/                    # Compiler Construction Lab
+├── ccl/                    # Competitive Coding Lab
 │   ├── exp4_3.cpp
 │   └── exp4_5.cpp
 │
@@ -48,8 +48,8 @@ sem4-exp/
 
 ## 📚 Subject Descriptions
 
-### 🔧 CCL — Competetive Coding Lab
-Contains C++ implementations of compiler design experiments, including lexical analysis, parsing techniques, and related components of compiler construction theory.
+### 🔧 CCL — Competitive Coding Lab
+Focused on **interview preparation and DSA (Data Structures & Algorithms)** using C++. Contains solutions to competitive programming problems and LeetCode-style challenges covering topics like arrays, recursion, dynamic programming, graphs, and more.
 
 ### 💻 COA — Computer Organization & Architecture
 Covers low-level programming experiments in C++ that explore CPU organization, instruction sets, memory hierarchies, and fundamental architectural concepts.
@@ -66,7 +66,7 @@ Weekly lab exercises focused on frontend and full-stack web development. Organiz
 
 | Subject | Languages & Tools |
 |--------|-------------------|
-| CCL    | C++ |
+| CCL    | C++, LeetCode-style DSA problems |
 | COA    | C++ |
 | DAV    | Python, Jupyter Notebook, Pandas, Matplotlib, Seaborn |
 | WP     | HTML, CSS, JavaScript |
