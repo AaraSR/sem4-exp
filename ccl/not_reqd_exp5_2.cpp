@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-// hel;ing (utility) DFS function to detect cycle in a directed graph
+// helping (utility) DFS function to detect cycle in a directed graph
 bool isCyclicUtil(vector<vector<int>>& adj, int u, vector<bool>& visited, vector<bool>& recStack) {
     
     // it is in the path of checking 'isCycle', hence cycle exists!
