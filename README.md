@@ -18,8 +18,7 @@ The repository is intended for academic reference, peer collaboration, and perso
 sem4-exp/
 │
 ├── ccl/                    # Competitive Coding Lab
-│   ├── exp4_3.cpp
-│   └── exp4_5.cpp
+│   └── c++ files for self-study exp
 │
 ├── coa_temp/               # Computer Organization & Architecture
 │   ├── 1.cpp
@@ -29,19 +28,10 @@ sem4-exp/
 ├── dav/                    # Data Analysis & Visualization
 │   ├── data/
 │   ├── output/
-│   ├── exp1.ipynb
-│   ├── exp2.ipynb
-│   ├── exp3.ipynb
-│   ├── exp4.ipynb
-│   ├── exp5.ipynb
-│   └── exp6.ipynb
+│   └── ipynb notebooks for exp
 │
 └── wp/                     # Web Programming
-    ├── week1/
-    ├── week2.1/
-    ├── week2.2/
-    ├── week3.1/
-    └── ...
+│   └── html, css and js files in week-wise
 ```
 
 ---
