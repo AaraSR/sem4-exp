@@ -32,3 +32,15 @@ private:
         }
     }
 };
+
+int main() {
+    vector<vector<int>> edges = {{0,1},{1,2},{3,4}};    // 0-1-2 3-4
+    int n = 5;
+
+    Solution sol;
+
+    int result = sol.countComponents(n, edges);
+    cout << result << endl;
+
+    return 0;
+}
